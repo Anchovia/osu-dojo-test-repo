@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  user_id        String   @id
+  username       String
+  reg_data       DateTime @default(now())
+  last_play_date DateTime
+  passed_dan     String
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+}
+
+model dan_logs {
+  user_id     String   @id
+  dan_code    String
+  username    String
+  api_key     String
+  score_json  String
+  use_pause   Boolean
+  is_dan_pass Boolean
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model dan {
+  dan_id        String   @id
+  dan_name      String
+  leve_name     String
+  game_mode     String
+  sorting_code  String
+  mapset_id     String
+  map_id        String
+  mapper_name   String
+  map_diff      String
+  map_length    String
+  is_dan_pass   Boolean
+  can_use_pause Boolean
+  use_v2        Boolean
+  clear_member  String
+  try_member    String
+  can_use_mode  String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  avarage_pp    String
+}
