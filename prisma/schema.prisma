@@ -17,18 +17,6 @@ model users {
   updated_at     DateTime @updatedAt
 }
 
-model dan_logs {
-  user_id     String   @id
-  dan_code    String
-  username    String
-  api_key     String
-  score_json  String
-  use_pause   Boolean
-  is_dan_pass Boolean
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-}
-
 model dan {
   dan_id        String   @id
   dan_name      String
@@ -49,4 +37,16 @@ model dan {
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
   avarage_pp    String
+}
+
+model dan_logs {
+  user_id     String   @id
+  dan_code    String
+  username    String
+  api_key     String
+  score_json  String
+  use_pause   Boolean
+  is_dan_pass Boolean
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 }
