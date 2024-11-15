@@ -9,6 +9,7 @@ datasource db {
 
 model User {
   id             Int       @id
+  api_key        String    @unique
   username       String    @unique
   registered_at  DateTime  @default(now())
   last_played_at DateTime
@@ -18,19 +19,15 @@ model User {
   dan_logs       Dan_log[]
 }
 
-model Dan_log {
-  id         Int      @id
-  user       User     @relation(fields: [user_id], references: [id])
-  user_id    Int
-  dan        Dan      @relation(fields: [dan_id], references: [id])
-  dan_id     Int
-  api_key    String   @unique
-  score      String //json
-  used_pause Boolean
-  used_v2    Boolean
-  is_passed  Boolean
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+model Map {
+  id          Int      @id
+  mapper_name String
+  length      String
+  difficulty  Float
+  average_pp  Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  dans        Dan[]
 }
 
 model Dan {
@@ -52,13 +49,16 @@ model Dan {
   dan_logs         Dan_log[]
 }
 
-model Map {
-  id          Int      @id
-  mapper_name String
-  length      String
-  difficulty  Float
-  average_pp  Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  dans        Dan[]
+model Dan_log {
+  id         Int      @id
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    Int
+  dan        Dan      @relation(fields: [dan_id], references: [id])
+  dan_id     Int
+  score      String //json
+  used_pause Boolean
+  used_v2    Boolean
+  is_passed  Boolean
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
