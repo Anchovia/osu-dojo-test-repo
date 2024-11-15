@@ -8,56 +8,57 @@ datasource db {
 }
 
 model User {
-  user_id        Int        @id
-  username       String     @unique
-  reg_data       DateTime   @default(now())
-  last_play_date DateTime
+  id             Int       @id
+  username       String    @unique
+  registered_at  DateTime  @default(now())
+  last_played_at DateTime
   passed_dan     String
-  created_at     DateTime   @default(now())
-  updated_at     DateTime   @updatedAt
-  Dan_logs       Dan_logs[]
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
+  dan_logs       Dan_log[]
 }
 
-model Dan_logs {
-  user           User     @relation(fields: [user_field_id], references: [user_id])
-  user_field_id  Int
-  dan            Dan      @relation(fields: [dan_field_id], references: [dan_id])
-  dan_field_id   Int
-  api_key        String   @id
-  score_json     String
-  user_use_pause Boolean
-  user_use_v2    Boolean
-  is_dan_passed  Boolean
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
+model Dan_log {
+  id         Int      @id
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    Int
+  dan        Dan      @relation(fields: [dan_id], references: [id])
+  dan_id     Int
+  api_key    String   @unique
+  score      String //json
+  used_pause Boolean
+  used_v2    Boolean
+  is_passed  Boolean
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model Dan {
-  dan_id        Int        @id
-  dan_code      String     @unique
-  dan_name      String
-  dan_level     String
-  cutline       Int
-  allowed_modes String
-  can_use_pause Boolean
-  can_use_v2    Boolean
-  clear_member  Int
-  try_member    Int
-  mapset_id     Int        @unique
-  map           Map        @relation(fields: [map_field_id], references: [map_id])
-  map_field_id  Int
-  created_at    DateTime   @default(now())
-  updated_at    DateTime   @updatedAt
-  Dan_logs      Dan_logs[]
+  id               Int       @id @default(autoincrement())
+  code             String    @unique
+  name             String    @unique
+  level            String    @unique
+  cutline          Int
+  allowed_modes    String // JSON string format
+  can_use_pause    Boolean
+  can_use_v2       Boolean
+  clear_user_count Int
+  try_user_count   Int
+  mapset_id        Int       @unique
+  map              Map       @relation(fields: [map_id], references: [id])
+  map_id           Int
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+  dan_logs         Dan_log[]
 }
 
 model Map {
-  map_id      Int      @id
+  id          Int      @id
   mapper_name String
-  map_length  String
+  length      String
   difficulty  Float
-  avarage_pp  Int
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  Dan         Dan[]
+  average_pp  Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  dans        Dan[]
 }

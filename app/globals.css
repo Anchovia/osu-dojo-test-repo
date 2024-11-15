@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html {
+        @apply bg-neutral-900 text-white;
+    }
+}
+
+@layer components {
+    .primary-btn {
+        @apply w-full bg-neutral-700 font-medium rounded-md text-center hover:bg-neutral-800 transition-colors;
+    }
+}
