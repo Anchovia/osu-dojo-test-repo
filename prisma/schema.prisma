@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -11,7 +11,6 @@ model User {
   id             Int       @id
   api_key        String    @unique
   username       String    @unique
-  registered_at  DateTime  @default(now())
   last_played_at DateTime
   passed_dan     String
   created_at     DateTime  @default(now())
@@ -24,24 +23,23 @@ model Map {
   mapper_name String
   length      String
   difficulty  Float
-  average_pp  Int
+  average_pp  Float
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   dans        Dan[]
 }
 
 model Dan {
-  id               Int       @id @default(autoincrement())
+  id               Int       @id
   code             String    @unique
   name             String    @unique
   level            String    @unique
   cutline          Int
-  allowed_modes    String // JSON string format
+  allowed_modes    String[]
   can_use_pause    Boolean
   can_use_v2       Boolean
   clear_user_count Int
   try_user_count   Int
-  mapset_id        Int       @unique
   map              Map       @relation(fields: [map_id], references: [id])
   map_id           Int
   created_at       DateTime  @default(now())
@@ -55,7 +53,7 @@ model Dan_log {
   user_id    Int
   dan        Dan      @relation(fields: [dan_id], references: [id])
   dan_id     Int
-  score      String //json
+  score      Json
   used_pause Boolean
   used_v2    Boolean
   is_passed  Boolean
